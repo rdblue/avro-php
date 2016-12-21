@@ -1,0 +1,6 @@
+[submodule "avro-shared"]
+	path = avro-shared
+	url = https://github.com/rdblue/avro-shared.git
+[submodule "share"]
+	path = share
+	url = https://github.com/rdblue/avro-shared.git
