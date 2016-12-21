@@ -69,7 +69,8 @@ class DataFileTest extends PHPUnit_Framework_TestCase
     $dw->close();
 
     $dr = AvroDataIO::open_file($data_file);
-    $read_data = array_shift($dr->data());
+    $data = $dr->data();
+    $read_data = array_shift($data);
     $dr->close();
     $this->assertEquals(null, $read_data);
   }
@@ -84,7 +85,8 @@ class DataFileTest extends PHPUnit_Framework_TestCase
     $dw->close();
 
     $dr = AvroDataIO::open_file($data_file);
-    $read_data = array_shift($dr->data());
+    $file_data = $dr->data();
+    $read_data = array_shift($file_data);
     $dr->close();
     $this->assertEquals($data, $read_data);
   }
@@ -99,7 +101,8 @@ class DataFileTest extends PHPUnit_Framework_TestCase
     $dw->close();
 
     $dr = AvroDataIO::open_file($data_file);
-    $read_data = array_shift($dr->data());
+    $file_data = $dr->data();
+    $read_data = array_shift($file_data);
     $dr->close();
     $this->assertEquals($data, $read_data);
   }
@@ -117,7 +120,8 @@ class DataFileTest extends PHPUnit_Framework_TestCase
     $dw->close();
 
     $dr = AvroDataIO::open_file($data_file);
-    $read_data = array_shift($dr->data());
+    $file_data = $dr->data();
+    $read_data = array_shift($file_data);
     $dr->close();
     $this->assertEquals($data, $read_data);
 
@@ -133,7 +137,8 @@ class DataFileTest extends PHPUnit_Framework_TestCase
     $dw->close();
 
     $dr = AvroDataIO::open_file($data_file);
-    $read_datum = array_shift($dr->data());
+    $data = $dr->data();
+    $read_datum = array_shift($data);
     $dr->close();
     $this->assertEquals($datum, $read_datum);
   }
@@ -148,7 +153,8 @@ class DataFileTest extends PHPUnit_Framework_TestCase
     $dw->close();
 
     $dr = AvroDataIO::open_file($data_file);
-    $read_datum = array_shift($dr->data());
+    $data = $dr->data();
+    $read_datum = array_shift($data);
     $dr->close();
     $this->assertEquals($datum, $read_datum);
   }
