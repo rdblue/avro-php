@@ -21,7 +21,7 @@ cd `dirname "$0"`
 
 dist_dir="../../dist/php"
 build_dir="pkg"
-version=$(cat ../../share/VERSION.txt)
+version=$(cat VERSION)
 libname="avro-php-$version"
 lib_dir="$build_dir/$libname"
 tarball="$libname.tar.bz2"
@@ -63,6 +63,31 @@ case "$1" in
 
      clean)
        clean
+       ;;
+
+     docker)
+       docker build -t avro-php .
+       if [ "$(uname -s)" == "Linux" ]; then
+         USER_NAME=${SUDO_USER:=$USER}
+         USER_ID=$(id -u $USER_NAME)
+         GROUP_ID=$(id -g $USER_NAME)
+       else # boot2docker uid and gid
+         USER_NAME=$USER
+         USER_ID=1000
+         GROUP_ID=50
+       fi
+       docker build -t avro-php-${USER_NAME} - <<UserSpecificDocker
+FROM avro-build
+RUN groupadd -g ${GROUP_ID} ${USER_NAME} || true
+RUN useradd -g ${GROUP_ID} -u ${USER_ID} -k /root -m ${USER_NAME}
+ENV HOME /home/${USER_NAME}
+UserSpecificDocker
+       docker run --rm=true -t -i \
+         -v ${PWD}:/home/${USER_NAME}/avro \
+         -w /home/${USER_NAME}/avro \
+         -v ${HOME}/.gnupg:/home/${USER_NAME}/.gnupg \
+         -u ${USER_NAME} \
+         avro-php-${USER_NAME}
        ;;
 
      *)
